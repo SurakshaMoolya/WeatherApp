@@ -1,4 +1,5 @@
 from cProfile import label
+import imp
 from tkinter import *
 import tkinter as tk
 from unittest import result
@@ -8,6 +9,12 @@ from timezonefinder import TimezoneFinder
 from datetime import datetime
 import requests
 import pytz
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+API_KEY= os.getenv("API_KEY")
 
 root=Tk()
 root.title("CloudPoint")
@@ -30,7 +37,7 @@ def getWeather():
         name.config(text="CURRENT WEATHER")
 
         #api
-        api="https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=3a5dbc21521748e213af49b79ee7b2a4"
+        api="https://api.openweathermap.org/data/2.5/weather?q="+city+f"&appid={API_KEY}"
 
         json_data = requests.get(api).json()
         condition = json_data['weather'][0]['main']
